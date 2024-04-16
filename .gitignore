@@ -1,0 +1,12 @@
+tags
+*.cov
+.cover
+target
+*.xls
+*.xlsx
+*.bdb
+var/
+.vscode/
+user-test.yml
+
+feed-master

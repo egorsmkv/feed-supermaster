@@ -1,0 +1,13 @@
+[Unit]
+Description=Feed-Master
+After=network.target
+
+[Service]
+ExecStart=/opt/feed-master/feed-master --port=8080 --db=/opt/feed-master/feed-master.bdb --conf=/opt/feed-master/feeds.yml --telegram_token=
+Restart=always
+User=root
+Group=root
+WorkingDirectory=/opt/feed-master
+
+[Install]
+WantedBy=multi-user.target

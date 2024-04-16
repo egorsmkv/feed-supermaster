@@ -1,0 +1,74 @@
+feeds:
+  go:
+    title: Go blogs
+    description: Go blogs
+    link: http://localhost
+    language: "en-US"
+    telegram_channel: -1002049812124
+    sources:
+      - name: The Go Blog
+        url: https://go.dev/blog/feed.atom?format=xml
+      - name: Applied Go
+        url: https://appliedgo.net/index.xml
+      - name: Go Time
+        url: https://changelog.com/gotime/feed
+      - name: Ardan Labs
+        url: https://www.ardanlabs.com/categories/go-programing/index.xml
+      - name: Golang Code
+        url: https://www.golangcode.com/index.xml
+      - name: Golang Libs
+        url: https://golang.ch/feed/
+      - name: hacker-news
+        url: https://hnrss.org/newest?q=golang
+  rust:
+    title: Rust blogs
+    description: Rust blogs
+    link: http://localhost
+    language: "en-US"
+    telegram_channel: -1001869387030
+    sources:
+      - name: Steve Klabnik
+        url: https://steveklabnik.com/feed.xml
+      - name: without.boats
+        url: https://without.boats/index.xml
+      - name: hacker-news
+        url: https://hnrss.org/newest?q=rust
+  engineering:
+    title: Engineering blogs
+    description: Engineering blogs
+    link: http://localhost
+    language: "en-US"
+    telegram_channel: -1002020551433
+    sources:
+      - name: Google
+        url: https://feeds.feedburner.com/GDBcode
+      - name: Meta
+        url: https://engineering.fb.com/feed/
+      - name: Netflix
+        url: https://netflixtechblog.com/feed
+      - name: Airbnb
+        url: https://medium.com/feed/airbnb-engineering
+      # - name: Uber
+      #   url: https://www.uber.com/en-US/blog/engineering/rss/
+      - name: AWS
+        url: https://aws.amazon.com/blogs/aws/feed/
+      - name: MicrosoftAI
+        url: https://blogs.microsoft.com/ai/feed/
+      - name: LinkedIn
+        url: https://blogs.microsoft.com/ai/feed/
+      - name: Spotify
+        url: https://engineering.atspotify.com/feed/
+      - name: GitHub
+        url: https://github.blog/feed/
+      - name: Dropbox
+        url: https://dropbox.tech/feed
+
+# Other sources
+# https://medium.com/@sujathamudadla1213/here-is-an-expanded-list-of-engineering-blogs-from-well-known-companies-edccca5d9530
+
+system:
+  update: 1m
+  max_per_feed: 10
+  max_total: 50
+  max_keep: 200
+  base_url: http://localhost:8080

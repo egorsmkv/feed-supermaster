@@ -7,7 +7,7 @@ feeds:
     telegram_group_id: -1002075434721
     sources:
       - name: cs.CV
-        url: http://arxiv.org/rss/cs.CV
+        url: https://rss.arxiv.org/rss/cs.CV
   go:
     title: Go blogs
     description: Go blogs

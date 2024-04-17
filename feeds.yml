@@ -1,5 +1,5 @@
 feeds:
-  cv:
+  computer_vision:
     telegram_group_id: -1002075434721
     sources:
       - name: cs.CV

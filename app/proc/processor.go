@@ -47,7 +47,7 @@ func (p *Processor) processFeeds(ctx context.Context) {
 		for _, src := range fm.Sources {
 			name, src, fm := name, src, fm
 			swg.Go(func(context.Context) {
-				p.processFeed(name, src.URL, fm.TelegramChannel, p.Conf.System.MaxItems, fm.Filter)
+				p.processFeed(name, src.URL, fm.TelegramGroupID, p.Conf.System.MaxItems, fm.Filter)
 			})
 		}
 	}
@@ -56,7 +56,7 @@ func (p *Processor) processFeeds(ctx context.Context) {
 	time.Sleep(p.Conf.System.UpdateInterval)
 }
 
-func (p *Processor) processFeed(name, url, telegramChannel string, max int, filter config.Filter) {
+func (p *Processor) processFeed(name, url, telegramGroupID string, max int, filter config.Filter) {
 	rss, err := feed.Parse(url)
 	if err != nil {
 		log.Printf("[WARN] failed to parse %s, %v", url, err)
@@ -97,16 +97,16 @@ func (p *Processor) processFeed(name, url, telegramChannel string, max int, filt
 
 		rptr := repeater.NewDefault(3, 5*time.Second)
 		err = rptr.Do(context.Background(), func() error {
-			if e := p.TelegramNotif.Send(telegramChannel, rss, item); e != nil {
+			if e := p.TelegramNotif.Send(telegramGroupID, rss, item); e != nil {
 				log.Printf("[WARN] failed attempt to send telegram message, url=%s to channel=%s, %v",
-					item.Enclosure.URL, telegramChannel, e)
+					item.Enclosure.URL, telegramGroupID, e)
 				return err
 			}
 			return nil
 		})
 		if err != nil {
 			log.Printf("[WARN] failed to send telegram message, url=%s to channel=%s, %v",
-				item.Enclosure.URL, telegramChannel, err)
+				item.Enclosure.URL, telegramGroupID, err)
 		}
 	}
 

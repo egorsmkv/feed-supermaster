@@ -53,7 +53,7 @@ type Feed struct {
 	Link            string   `yaml:"link"`
 	Image           string   `yaml:"image"`
 	Language        string   `yaml:"language"`
-	TelegramChannel string   `yaml:"telegram_channel"`
+	TelegramGroupID string   `yaml:"telegram_group_id"`
 	Filter          Filter   `yaml:"filter"`
 	Sources         []Source `yaml:"sources"`
 	ExtendDateTitle string   `yaml:"ext_date"`
@@ -111,7 +111,7 @@ func Load(fname string) (res *Conf, err error) {
 func SingleFeed(feedURL, ch string, updateInterval time.Duration) *Conf {
 	conf := Conf{}
 	f := Feed{
-		TelegramChannel: ch,
+		TelegramGroupID: ch,
 		Sources: []Source{
 			{Name: "auto", URL: feedURL},
 		},

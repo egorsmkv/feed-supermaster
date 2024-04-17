@@ -4,7 +4,7 @@ feeds:
     description: Go blogs
     link: http://localhost
     language: "en-US"
-    telegram_channel: -1002049812124
+    telegram_group_id: -1002049812124
     sources:
       - name: The Go Blog
         url: https://go.dev/blog/feed.atom?format=xml
@@ -25,7 +25,7 @@ feeds:
     description: Rust blogs
     link: http://localhost
     language: "en-US"
-    telegram_channel: -1001869387030
+    telegram_group_id: -1001869387030
     sources:
       - name: Steve Klabnik
         url: https://steveklabnik.com/feed.xml
@@ -38,7 +38,7 @@ feeds:
     description: Engineering blogs
     link: http://localhost
     language: "en-US"
-    telegram_channel: -1002020551433
+    telegram_group_id: -1002020551433
     sources:
       - name: Google
         url: https://feeds.feedburner.com/GDBcode

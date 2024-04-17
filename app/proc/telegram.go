@@ -60,7 +60,9 @@ func NewTelegramClient(token, apiURL string, timeout time.Duration, ds DurationS
 	}
 
 	bot.Handle("/chat_id", func(c tb.Context) error {
-		return c.Send(c.Chat().ID)
+		chatID := fmt.Sprintf("%d", c.Chat().ID)
+
+		return c.Send(chatID)
 	})
 
 	go bot.Start()

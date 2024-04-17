@@ -12,7 +12,7 @@ import (
 	"github.com/microcosm-cc/bluemonday"
 	"github.com/pkg/errors"
 	"golang.org/x/net/html"
-	tb "gopkg.in/tucnak/telebot.v2"
+	tb "gopkg.in/telebot.v3"
 
 	"github.com/umputun/feed-master/app/feed"
 )
@@ -59,6 +59,10 @@ func NewTelegramClient(token, apiURL string, timeout time.Duration, ds DurationS
 		return nil, err
 	}
 
+	bot.Handle("/chat_id", func(c tb.Context) error {
+		return c.Send(c.Chat().ID)
+	})
+
 	result := TelegramClient{
 		Bot:             bot,
 		Timeout:         timeout,
@@ -86,7 +90,7 @@ func (client TelegramClient) Send(channelID string, feed feed.Rss2, item feed.It
 func (client TelegramClient) sendText(channelID string, feed feed.Rss2, item feed.Item) (*tb.Message, error) {
 	message, err := client.Bot.Send(
 		recipient{chatID: channelID},
-		client.getMessageHTML(feed, item, htmlMessageParams{WithMp3Link: true}),
+		client.getMessageHTML(feed, item),
 		tb.ModeHTML,
 		tb.NoPreview,
 	)
@@ -101,10 +105,8 @@ func (client TelegramClient) tagLinkOnlySupport(htmlText string) string {
 	return html.UnescapeString(p.Sanitize(htmlText))
 }
 
-type htmlMessageParams struct{ WithMp3Link, TrimCaption bool }
-
 // getMessageHTML generates HTML message from provided feed.Item
-func (client TelegramClient) getMessageHTML(feed feed.Rss2, item feed.Item, params htmlMessageParams) string {
+func (client TelegramClient) getMessageHTML(feed feed.Rss2, item feed.Item) string {
 	var header, footer string
 	title := strings.TrimSpace(item.Title)
 	if title != "" && item.Link == "" {

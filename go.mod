@@ -23,7 +23,7 @@ require (
 	github.com/tcolgate/mp3 v0.0.0-20170426193717-e79c5a46d300
 	go.etcd.io/bbolt v1.3.9
 	golang.org/x/net v0.24.0
-	gopkg.in/tucnak/telebot.v2 v2.5.0
+	gopkg.in/telebot.v3 v3.2.1
 	gopkg.in/yaml.v3 v3.0.1
 )
 

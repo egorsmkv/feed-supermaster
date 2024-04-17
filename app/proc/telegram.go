@@ -63,6 +63,8 @@ func NewTelegramClient(token, apiURL string, timeout time.Duration, ds DurationS
 		return c.Send(c.Chat().ID)
 	})
 
+	go bot.Start()
+
 	result := TelegramClient{
 		Bot:             bot,
 		Timeout:         timeout,

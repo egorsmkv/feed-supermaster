@@ -123,8 +123,6 @@ func (s *Server) router() *chi.Mux {
 		rrss.Head("/rss/{name}", s.getFeedCtrl)
 		rrss.Get("/list", s.getListCtrl)
 		rrss.Get("/feed/{name}", s.getFeedPageCtrl)
-		rrss.Get("/feed/{name}/sources", s.getSourcesPageCtrl)
-		rrss.Get("/feed/{name}/source/{source}", s.getFeedSourceCtrl)
 		rrss.Get("/feeds", s.getFeedsPageCtrl)
 	})
 

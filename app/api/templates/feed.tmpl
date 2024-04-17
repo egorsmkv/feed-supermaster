@@ -20,7 +20,7 @@
     <div class="ump-feed-master-header__brand">
         <div>
             <span class="ump-feed-master-name">Feed Master</span>
-            <span class="ump-feed-master-info">{{.Description}} <a href="{{.Link}}" class="ump-feed-master-header-link">«{{.Name}}»</a></span>
+            <span class="ump-feed-master-info"><a href="{{.Link}}" class="ump-feed-master-header-link">«{{.Link}}»</a></span>
             {{if ne .TelegramGroupID ""}}
             <span>
             </span>
@@ -28,7 +28,7 @@
         </div>
     </div>
     <div class="ump-feed-master-header__meta">
-        <a href="{{.RSSLink}}" class="ump-feed-master-header-link">RSS</a>,&nbsp;<a href="{{.SourcesLink}}" class="ump-feed-master-header-link">{{.Feeds}} feeds</a>,&nbsp;<span data-toggle="tooltip" title="{{.SinceLastUpdate}}">{{.LastUpdate.Format "02 Jan 2006 15:04:05 MST"}}</span>
+        <a href="{{.RSSLink}}" class="ump-feed-master-header-link">RSS</a>,&nbsp;{{.Feeds}} feeds,&nbsp;<span data-toggle="tooltip" title="{{.SinceLastUpdate}}">{{.LastUpdate.Format "02 Jan 2006 15:04:05 MST"}}</span>
     </div>
 </header>
 
@@ -48,10 +48,6 @@
             <div>
                 <a href="{{.Link}}"
                    target="_blank"><span class="ump-feed-master-program-name">{{.Title}}</span>
-                    <i class="fas fa-info-circle"
-                       data-toggle="tooltip"
-                       title="{{.Description}}">
-                    </i>
                 </a>
             </div>
             <div class="ump-feed-master-timestamp-cell">

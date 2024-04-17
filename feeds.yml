@@ -1,14 +1,10 @@
 feeds:
   cv:
-    title: CV
-    link: http://localhost
     telegram_group_id: -1002075434721
     sources:
       - name: cs.CV
         url: https://rss.arxiv.org/rss/cs.CV
   go:
-    title: Go blogs
-    link: http://localhost
     telegram_group_id: -1002049812124
     sources:
       - name: The Go Blog
@@ -26,8 +22,6 @@ feeds:
       - name: hacker-news
         url: https://hnrss.org/newest?q=golang
   rust:
-    title: Rust blogs
-    link: http://localhost
     telegram_group_id: -1001869387030
     sources:
       - name: Steve Klabnik
@@ -37,8 +31,6 @@ feeds:
       - name: hacker-news
         url: https://hnrss.org/newest?q=rust
   engineering:
-    title: Engineering blogs
-    link: http://localhost
     telegram_group_id: -1002020551433
     sources:
       - name: Google
@@ -72,4 +64,4 @@ system:
   max_per_feed: 10
   max_total: 50
   max_keep: 200
-  base_url: http://localhost:8080
+  base_url: http://localhost:8099

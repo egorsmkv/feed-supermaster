@@ -1,18 +1,14 @@
 feeds:
   cv:
     title: CV
-    description: Computer Vision
     link: http://localhost
-    language: "en-US"
     telegram_group_id: -1002075434721
     sources:
       - name: cs.CV
         url: https://rss.arxiv.org/rss/cs.CV
   go:
     title: Go blogs
-    description: Go blogs
     link: http://localhost
-    language: "en-US"
     telegram_group_id: -1002049812124
     sources:
       - name: The Go Blog
@@ -31,9 +27,7 @@ feeds:
         url: https://hnrss.org/newest?q=golang
   rust:
     title: Rust blogs
-    description: Rust blogs
     link: http://localhost
-    language: "en-US"
     telegram_group_id: -1001869387030
     sources:
       - name: Steve Klabnik
@@ -44,9 +38,7 @@ feeds:
         url: https://hnrss.org/newest?q=rust
   engineering:
     title: Engineering blogs
-    description: Engineering blogs
     link: http://localhost
-    language: "en-US"
     telegram_group_id: -1002020551433
     sources:
       - name: Google

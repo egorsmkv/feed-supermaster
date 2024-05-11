@@ -1,8 +1,6 @@
 package api
 
-import (
-	"embed"
-)
+import "embed"
 
 //go:embed static/*
 var assetsFS embed.FS

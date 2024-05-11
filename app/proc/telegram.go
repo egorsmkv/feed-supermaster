@@ -7,11 +7,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/denisbrodbeck/striphtmltags"
 	log "github.com/go-pkgz/lgr"
-	"github.com/microcosm-cc/bluemonday"
 	"github.com/pkg/errors"
-	"golang.org/x/net/html"
 	tb "gopkg.in/telebot.v3"
 
 	"github.com/umputun/feed-master/app/feed"
@@ -19,10 +16,9 @@ import (
 
 // TelegramClient client
 type TelegramClient struct {
-	Bot             *tb.Bot
-	Timeout         time.Duration
-	DurationService DurationService
-	TelegramSender  TelegramSender
+	Bot            *tb.Bot
+	Timeout        time.Duration
+	TelegramSender TelegramSender
 }
 
 // TelegramSender is the interface for sending messages to telegram
@@ -30,13 +26,8 @@ type TelegramSender interface {
 	Send(tb.Audio, *tb.Bot, tb.Recipient, *tb.SendOptions) (*tb.Message, error)
 }
 
-// DurationService is the interface for reading duration from files
-type DurationService interface {
-	File(fname string) int
-}
-
 // NewTelegramClient init telegram client
-func NewTelegramClient(token, apiURL string, timeout time.Duration, ds DurationService, tgs TelegramSender) (*TelegramClient, error) {
+func NewTelegramClient(token, apiURL string, timeout time.Duration, tgs TelegramSender) (*TelegramClient, error) {
 	log.Printf("[INFO] create telegram client for %s, timeout: %s", apiURL, timeout)
 	if timeout == 0 {
 		timeout = time.Second * 60
@@ -68,10 +59,9 @@ func NewTelegramClient(token, apiURL string, timeout time.Duration, ds DurationS
 	go bot.Start()
 
 	result := TelegramClient{
-		Bot:             bot,
-		Timeout:         timeout,
-		DurationService: ds,
-		TelegramSender:  tgs,
+		Bot:            bot,
+		Timeout:        timeout,
+		TelegramSender: tgs,
 	}
 	return &result, err
 }
@@ -102,13 +92,6 @@ func (client TelegramClient) sendText(channelID string, feed feed.Rss2, item fee
 	return message, err
 }
 
-// https://core.telegram.org/bots/api#html-style
-func (client TelegramClient) tagLinkOnlySupport(htmlText string) string {
-	p := bluemonday.NewPolicy()
-	p.AllowAttrs("href").OnElements("a")
-	return html.UnescapeString(p.Sanitize(htmlText))
-}
-
 // getMessageHTML generates HTML message from provided feed.Item
 func (client TelegramClient) getMessageHTML(feed feed.Rss2, item feed.Item) string {
 	var header, footer string
@@ -135,32 +118,6 @@ func (r recipient) Recipient() string {
 	}
 
 	return r.chatID
-}
-
-// CropText shrinks the provided string, removing HTML tags in case it's exceeding the limit
-func CropText(inp string, max int) string {
-	if len([]rune(inp)) > max {
-		return CleanText(inp, max)
-	}
-	return inp
-}
-
-// CleanText removes html tags and shrinks result
-func CleanText(inp string, max int) string {
-	res := striphtmltags.StripTags(inp)
-	if len([]rune(res)) > max {
-		// 4 symbols reserved for space and three dots on the end
-		snippet := []rune(res)[:max-4]
-		// go back in snippet and found first space
-		for i := len(snippet) - 1; i >= 0; i-- {
-			if snippet[i] == ' ' {
-				snippet = snippet[:i]
-				break
-			}
-		}
-		res = string(snippet) + " ..."
-	}
-	return res
 }
 
 // TelegramSenderImpl is a TelegramSender implementation that sends messages to Telegram for real

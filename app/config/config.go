@@ -9,7 +9,6 @@ import (
 	"gopkg.in/yaml.v3"
 
 	"github.com/umputun/feed-master/app/feed"
-	"github.com/umputun/feed-master/app/youtube"
 )
 
 // Conf for feeds config yml
@@ -24,20 +23,6 @@ type Conf struct {
 		Concurrent          int           `yaml:"concurrent"`
 		BaseURL             string        `yaml:"base_url"`
 	} `yaml:"system"`
-
-	YouTube struct {
-		DlTemplate      string             `yaml:"dl_template"`
-		BaseChanURL     string             `yaml:"base_chan_url"`
-		BasePlaylistURL string             `yaml:"base_playlist_url"`
-		Channels        []youtube.FeedInfo `yaml:"channels"`
-		BaseURL         string             `yaml:"base_url"`
-		UpdateInterval  time.Duration      `yaml:"update"`
-		MaxItems        int                `yaml:"max_per_channel"`
-		FilesLocation   string             `yaml:"files_location"`
-		RSSLocation     string             `yaml:"rss_location"`
-		SkipShorts      time.Duration      `yaml:"skip_shorts"`
-		DisableUpdates  bool               `yaml:"disable_updates"`
-	} `yaml:"youtube"`
 }
 
 // Source defines config section for source
@@ -86,12 +71,6 @@ func (filter *Filter) Skip(item feed.Item) (bool, error) {
 	return false, nil
 }
 
-// YTChannel defines youtube channel config
-type YTChannel struct {
-	ID   string
-	Name string
-}
-
 // Load config from file
 func Load(fname string) (res *Conf, err error) {
 	res = &Conf{}
@@ -105,21 +84,6 @@ func Load(fname string) (res *Conf, err error) {
 	}
 	res.setDefaults()
 	return res, nil
-}
-
-// SingleFeed returns single feed "fake" config for no-config mode
-func SingleFeed(feedURL, ch string, updateInterval time.Duration) *Conf {
-	conf := Conf{}
-	f := Feed{
-		TelegramGroupID: ch,
-		Sources: []Source{
-			{Name: "auto", URL: feedURL},
-		},
-	}
-	conf.Feeds = map[string]Feed{"auto": f}
-	conf.System.UpdateInterval = updateInterval
-	conf.setDefaults()
-	return &conf
 }
 
 // SetDefaults sets default values for config

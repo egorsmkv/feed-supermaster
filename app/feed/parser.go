@@ -184,7 +184,6 @@ func parseFeedContent(content []byte) (Rss2, error) {
 
 // Normalize converts to RFC822 = "02 Jan 06 15:04 MST"
 func (rss *Rss2) Normalize() (Rss2, error) {
-
 	dt, err := rss.parseDateTime(rss.LastBuildDate)
 	if err != nil {
 		log.Printf("[DEBUG] failed to parse LastBuildDate: %v, fallback with PubDate", err)

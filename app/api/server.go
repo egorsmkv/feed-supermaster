@@ -29,8 +29,6 @@ import (
 
 	"github.com/umputun/feed-master/app/config"
 	"github.com/umputun/feed-master/app/feed"
-	"github.com/umputun/feed-master/app/youtube"
-	ytfeed "github.com/umputun/feed-master/app/youtube/feed"
 )
 
 // Server provides HTTP API
@@ -38,8 +36,6 @@ type Server struct {
 	Version       string
 	Conf          config.Conf
 	Store         Store
-	YoutubeStore  YoutubeStore
-	YoutubeSvc    YoutubeSvc
 	TemplLocation string
 	AdminPasswd   string
 
@@ -48,21 +44,9 @@ type Server struct {
 	templates  *template.Template
 }
 
-// YoutubeSvc provides access to youtube's audio rss
-type YoutubeSvc interface {
-	RSSFeed(cinfo youtube.FeedInfo) (string, error)
-	StoreRSS(chanID, rss string) error
-	RemoveEntry(entry ytfeed.Entry) error
-}
-
 // Store provides access to feed data
 type Store interface {
 	Load(fmFeed string, max int, skipJunk bool) ([]feed.Item, error)
-}
-
-// YoutubeStore provides access to YouTube channel data
-type YoutubeStore interface {
-	Load(channelID string, max int) ([]ytfeed.Entry, error)
 }
 
 // Run starts http server for API with all routes

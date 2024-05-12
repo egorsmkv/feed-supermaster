@@ -42,6 +42,7 @@ func (p *Processor) Do(ctx context.Context) error {
 
 func (p *Processor) processFeeds(ctx context.Context) {
 	log.Printf("[DEBUG] refresh started")
+
 	swg := syncs.NewSizedGroup(p.Conf.System.Concurrent, syncs.Preemptive, syncs.Context(ctx))
 	for name, fm := range p.Conf.Feeds {
 		for _, src := range fm.Sources {
@@ -52,7 +53,9 @@ func (p *Processor) processFeeds(ctx context.Context) {
 		}
 	}
 	swg.Wait()
+
 	log.Printf("[DEBUG] refresh completed")
+
 	time.Sleep(p.Conf.System.UpdateInterval)
 }
 
@@ -105,8 +108,7 @@ func (p *Processor) processFeed(name, url, telegramGroupID string, max int, filt
 			return nil
 		})
 		if err != nil {
-			log.Printf("[WARN] failed to send telegram message, url=%s to channel=%s, %v",
-				item.Enclosure.URL, telegramGroupID, err)
+			log.Printf("[WARN] failed to send telegram message, to channel=%s, %v", telegramGroupID, err)
 		}
 	}
 

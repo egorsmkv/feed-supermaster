@@ -8,7 +8,6 @@ import (
 	"time"
 
 	log "github.com/go-pkgz/lgr"
-	"github.com/google/uuid"
 	"github.com/jessevdk/go-flags"
 	bolt "go.etcd.io/bbolt"
 
@@ -29,8 +28,6 @@ type options struct {
 	TelegramServer  string        `long:"telegram_server" env:"TELEGRAM_SERVER" default:"https://api.telegram.org" description:"telegram bot api server"`
 	TelegramToken   string        `long:"telegram_token" env:"TELEGRAM_TOKEN" description:"telegram token"`
 	TelegramTimeout time.Duration `long:"telegram_timeout" env:"TELEGRAM_TIMEOUT" default:"1m" description:"telegram timeout"`
-
-	AdminPasswd string `long:"admin-passwd" env:"ADMIN_PASSWD" description:"admin password for protected endpoints"`
 
 	Dbg bool `long:"dbg" env:"DEBUG" description:"debug mode"`
 }
@@ -77,16 +74,10 @@ func main() {
 		}
 	}()
 
-	if opts.AdminPasswd == "" {
-		log.Printf("[WARN] admin password is not set, protected endpoints are disabled")
-		opts.AdminPasswd = uuid.New().String() // generate random (uuid) password
-	}
-
 	server := api.Server{
-		Version:     revision,
-		Conf:        *conf,
-		Store:       procStore,
-		AdminPasswd: opts.AdminPasswd,
+		Version: revision,
+		Conf:    *conf,
+		Store:   procStore,
 	}
 	server.Run(context.Background(), opts.Port)
 }

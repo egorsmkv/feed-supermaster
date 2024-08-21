@@ -16,9 +16,9 @@ import (
 
 // TelegramClient client
 type TelegramClient struct {
+	TelegramSender TelegramSender
 	Bot            *tb.Bot
 	Timeout        time.Duration
-	TelegramSender TelegramSender
 }
 
 // TelegramSender is the interface for sending messages to telegram

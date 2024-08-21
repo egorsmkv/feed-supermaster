@@ -17,16 +17,17 @@ import (
 )
 
 type options struct {
-	Port int    `short:"p" long:"port" description:"port to listen" default:"8080"`
 	DB   string `short:"c" long:"db" env:"FM_DB" default:"var/feed-master.bdb" description:"bolt db file"`
 	Conf string `short:"f" long:"conf" env:"FM_CONF" default:"feed-master.yml" description:"config file (yml)"`
 
 	// single feed overrides
-	Feed           string        `long:"feed" env:"FM_FEED" description:"single feed, overrides config"`
+	Feed string `long:"feed" env:"FM_FEED" description:"single feed, overrides config"`
+
+	TelegramServer string        `long:"telegram_server" env:"TELEGRAM_SERVER" default:"https://api.telegram.org" description:"telegram bot api server"`
+	TelegramToken  string        `long:"telegram_token" env:"TELEGRAM_TOKEN" description:"telegram token"`
+	Port           int           `short:"p" long:"port" description:"port to listen" default:"8080"`
 	UpdateInterval time.Duration `long:"update-interval" env:"UPDATE_INTERVAL" default:"1m" description:"update interval, overrides config"`
 
-	TelegramServer  string        `long:"telegram_server" env:"TELEGRAM_SERVER" default:"https://api.telegram.org" description:"telegram bot api server"`
-	TelegramToken   string        `long:"telegram_token" env:"TELEGRAM_TOKEN" description:"telegram token"`
 	TelegramTimeout time.Duration `long:"telegram_timeout" env:"TELEGRAM_TIMEOUT" default:"1m" description:"telegram timeout"`
 
 	Dbg bool `long:"dbg" env:"DEBUG" description:"debug mode"`

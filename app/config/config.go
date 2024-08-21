@@ -15,13 +15,13 @@ import (
 type Conf struct {
 	Feeds  map[string]Feed `yaml:"feeds"`
 	System struct {
+		BaseURL             string        `yaml:"base_url"`
 		UpdateInterval      time.Duration `yaml:"update"`
 		HTTPResponseTimeout time.Duration `yaml:"http_response_timeout"`
 		MaxItems            int           `yaml:"max_per_feed"`
 		MaxTotal            int           `yaml:"max_total"`
 		MaxKeepInDB         int           `yaml:"max_keep"`
 		Concurrent          int           `yaml:"concurrent"`
-		BaseURL             string        `yaml:"base_url"`
 	} `yaml:"system"`
 }
 
@@ -39,11 +39,11 @@ type Feed struct {
 	Image           string   `yaml:"image"`
 	Language        string   `yaml:"language"`
 	TelegramGroupID string   `yaml:"telegram_group_id"`
-	Filter          Filter   `yaml:"filter"`
-	Sources         []Source `yaml:"sources"`
 	ExtendDateTitle string   `yaml:"ext_date"`
 	Author          string   `yaml:"author"`
 	OwnerEmail      string   `yaml:"owner_email"`
+	Filter          Filter   `yaml:"filter"`
+	Sources         []Source `yaml:"sources"`
 }
 
 // Filter defines feed section for a feed filter~

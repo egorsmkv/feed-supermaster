@@ -57,8 +57,8 @@ type MediaThumbnail struct {
 // Enclosure element from item
 type Enclosure struct {
 	URL    string `xml:"url,attr"`
-	Length int    `xml:"length,attr"`
 	Type   string `xml:"type,attr"`
+	Length int    `xml:"length,attr"`
 }
 
 // Atom1 is atom feed

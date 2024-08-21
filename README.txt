@@ -8,3 +8,13 @@ Get the chat ID value using the command /chat_id after adding the bot to a group
 Build:
 
     go build -ldflags="-s -w" -o feed-master app/main.go
+
+Dev:
+
+golangci-lint run -c .golangci.yml ./...
+betteralign -apply ./...
+nilaway ./...
+deadcode ./...
+
+gofumpt -l -w .
+

@@ -26,14 +26,14 @@ import (
 
 // Server provides HTTP API
 type Server struct {
-	Version       string
-	Conf          config.Conf
-	Store         Store
-	TemplLocation string
+	Store Store
+	cache lcw.LoadingCache[[]byte]
 
-	httpServer *http.Server
-	cache      lcw.LoadingCache[[]byte]
-	templates  *template.Template
+	httpServer    *http.Server
+	templates     *template.Template
+	Conf          config.Conf
+	Version       string
+	TemplLocation string
 }
 
 // Store provides access to feed data

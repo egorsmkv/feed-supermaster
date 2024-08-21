@@ -37,17 +37,17 @@ func (s *Server) getFeedPageCtrl(w http.ResponseWriter, r *http.Request) {
 		}
 
 		tmplData := struct {
-			Items           []feed.Item
+			LastUpdate      time.Time
 			Name            string
 			Description     string
 			Link            string
-			LastUpdate      time.Time
 			SinceLastUpdate string
-			Feeds           int
 			Version         string
 			RSSLink         string
 			SourcesLink     string
 			TelegramGroupID string
+			Items           []feed.Item
+			Feeds           int
 		}{
 			Items:           items,
 			Name:            s.Conf.Feeds[feedName].Title,
@@ -84,11 +84,11 @@ func (s *Server) getFeedsPageCtrl(w http.ResponseWriter, r *http.Request) {
 		feeds := s.feeds()
 
 		type feedItem struct {
+			LastUpdated time.Time
 			config.Feed
 			FeedURL     string
-			Sources     int
 			SourcesLink string
-			LastUpdated time.Time
+			Sources     int
 		}
 		var feedItems []feedItem
 		for _, f := range feeds {
@@ -132,8 +132,8 @@ func (s *Server) getFeedsPageCtrl(w http.ResponseWriter, r *http.Request) {
 
 func (s *Server) renderErrorPage(w http.ResponseWriter, r *http.Request, err error, errCode int) { // nolint
 	tmplData := struct {
-		Status int
 		Error  string
+		Status int
 	}{Status: errCode, Error: err.Error()}
 
 	if err := s.templates.ExecuteTemplate(w, "error.tmpl", &tmplData); err != nil {

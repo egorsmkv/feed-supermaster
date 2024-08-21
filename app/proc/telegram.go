@@ -96,9 +96,7 @@ func (client TelegramClient) sendText(channelID string, rssFeed feed.Rss2, item 
 func (client TelegramClient) getMessageHTML(_ feed.Rss2, item feed.Item) string {
 	title := strings.TrimSpace(item.Title)
 
-	title = fmt.Sprintf("<b>%s</b>\n\n", title)
-
-	return title + item.Link
+	return fmt.Sprintf(`<a href="%s"><b>%s</b></a>`, item.Link, title)
 }
 
 type recipient struct {

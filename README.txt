@@ -5,9 +5,13 @@ Changes:
 
 Get the chat ID value using the command /chat_id after adding the bot to a group.
 
-Build:
+Build in DEV:
 
-    go build -ldflags="-s -w" -race -o feed-master app/main.go
+    go build -race -o feed-master app/main.go
+
+Build in RELEASE:
+
+    go build -ldflags="-s -w" -o feed-master app/main.go
 
 Dev:
 

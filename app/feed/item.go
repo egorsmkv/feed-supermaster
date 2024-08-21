@@ -8,8 +8,7 @@ import (
 // Item for rss
 type Item struct {
 	// Internal
-	DT        time.Time `xml:"-"`
-	Enclosure Enclosure `xml:"enclosure"`
+	DT time.Time `xml:"-"`
 	// Required
 	Title       string        `xml:"title"`
 	Link        string        `xml:"link"`
@@ -22,5 +21,6 @@ type Item struct {
 	Author      string        `xml:"author,omitempty"`
 	Duration    string        `xml:"duration,omitempty"`
 	DurationFmt string        `xml:"-"` // used for ui only in
+	Enclosure   Enclosure     `xml:"enclosure"`
 	Junk        bool          `xml:"-"`
 }

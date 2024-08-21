@@ -31,9 +31,9 @@ type Server struct {
 
 	httpServer    *http.Server
 	templates     *template.Template
-	Conf          config.Conf
 	Version       string
 	TemplLocation string
+	Conf          config.Conf
 }
 
 // Store provides access to feed data

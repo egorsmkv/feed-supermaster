@@ -94,10 +94,10 @@ func (s *Server) getFeedsPageCtrl(w http.ResponseWriter, r *http.Request) {
 
 		type feedItem struct {
 			LastUpdated time.Time
-			config.Feed
 			FeedURL     string
 			SourcesLink string
-			Sources     int
+			config.Feed
+			Sources int
 		}
 		var feedItems []feedItem
 		for _, f := range feeds {

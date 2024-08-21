@@ -67,12 +67,12 @@ func NewTelegramClient(token, apiURL string, timeout time.Duration, tgs Telegram
 }
 
 // Send message, skip if telegram token empty
-func (client TelegramClient) Send(channelID string, feed feed.Rss2, item feed.Item) (err error) {
+func (client TelegramClient) Send(channelID string, rssFeed feed.Rss2, item feed.Item) (err error) {
 	if client.Bot == nil || channelID == "" {
 		return nil
 	}
 
-	message, err := client.sendText(channelID, feed, item)
+	message, err := client.sendText(channelID, rssFeed, item)
 	if err != nil {
 		return errors.Wrapf(err, "can't send to telegram for %+v", item.Enclosure)
 	}
@@ -81,10 +81,10 @@ func (client TelegramClient) Send(channelID string, feed feed.Rss2, item feed.It
 	return nil
 }
 
-func (client TelegramClient) sendText(channelID string, feed feed.Rss2, item feed.Item) (*tb.Message, error) {
+func (client TelegramClient) sendText(channelID string, rssFeed feed.Rss2, item feed.Item) (*tb.Message, error) {
 	message, err := client.Bot.Send(
 		recipient{chatID: channelID},
-		client.getMessageHTML(feed, item),
+		client.getMessageHTML(rssFeed, item),
 		tb.ModeHTML,
 		tb.NoPreview,
 	)
@@ -93,7 +93,7 @@ func (client TelegramClient) sendText(channelID string, feed feed.Rss2, item fee
 }
 
 // getMessageHTML generates HTML message from provided feed.Item
-func (client TelegramClient) getMessageHTML(feed feed.Rss2, item feed.Item) string {
+func (client TelegramClient) getMessageHTML(rssFeed feed.Rss2, item feed.Item) string {
 	var header, footer string
 	title := strings.TrimSpace(item.Title)
 	if title != "" && item.Link == "" {
@@ -102,8 +102,8 @@ func (client TelegramClient) getMessageHTML(feed feed.Rss2, item feed.Item) stri
 		header = fmt.Sprintf("<a href=%q>%s</a>\n\n", item.Link, title)
 	}
 
-	feed.Title = strings.TrimSpace(feed.Title)
-	feedTitle := fmt.Sprintf("<b>%s</b>\n\n", feed.Title)
+	rssFeed.Title = strings.TrimSpace(rssFeed.Title)
+	feedTitle := fmt.Sprintf("<b>%s</b>\n\n", rssFeed.Title)
 
 	return feedTitle + header + footer
 }

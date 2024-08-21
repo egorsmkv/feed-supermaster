@@ -31,7 +31,7 @@ func (s *Server) getFeedPageCtrl(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// fill formatted duration
-		for i, item := range items {
+		for i, item := range items { //nolint
 			if item.Duration == "" {
 				continue
 			}
@@ -79,7 +79,7 @@ func (s *Server) getFeedPageCtrl(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	w.WriteHeader(http.StatusOK)
-	_, _ = w.Write(data) // nolint
+	_, _ = w.Write(data)
 }
 
 // GET /feeds - renders page with list of feeds
@@ -135,10 +135,10 @@ func (s *Server) getFeedsPageCtrl(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	w.WriteHeader(http.StatusOK)
-	_, _ = w.Write(data) // nolint
+	_, _ = w.Write(data)
 }
 
-func (s *Server) renderErrorPage(w http.ResponseWriter, r *http.Request, err error, errCode int) { // nolint
+func (s *Server) renderErrorPage(w http.ResponseWriter, r *http.Request, err error, errCode int) {
 	tmplData := struct {
 		Error  string
 		Status int

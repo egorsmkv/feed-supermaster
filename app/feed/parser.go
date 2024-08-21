@@ -4,9 +4,9 @@ package feed
 // based on http://siongui.github.io/2015/03/03/go-parse-web-feed-rss-atom/
 
 import (
+	"context"
 	"encoding/xml"
 	"fmt"
-	"html/template"
 	"io"
 	"net/http"
 	"strings"
@@ -99,11 +99,21 @@ type Entry struct {
 
 // Parse gets url to rss feed and returns Rss2 items
 func Parse(uri string) (result Rss2, err error) {
-	client := http.Client{Timeout: time.Minute * 2}
-	resp, err := client.Get(uri) // nolint
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
+	defer cancel()
+
+	client := http.Client{}
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, uri, http.NoBody)
 	if err != nil {
 		return result, err
 	}
+
+	resp, err := client.Do(req)
+	if err != nil {
+		return result, err
+	}
+
 	defer func() {
 		if e := resp.Body.Close(); e != nil {
 			log.Printf("[WARN] failed to close body, %s", e)
@@ -122,6 +132,7 @@ func Parse(uri string) (result Rss2, err error) {
 	if err != nil {
 		return result, errors.Wrapf(err, "failed to read body, url: %s", uri)
 	}
+
 	result, err = parseFeedContent(body)
 	if err != nil {
 		return Rss2{}, errors.Wrap(err, "parsing error")
@@ -138,14 +149,10 @@ func atom1ToRss2(a Atom1) Rss2 {
 		PubDate:     a.Updated,
 	}
 	r.ItemList = make([]Item, len(a.EntryList))
-	for i, entry := range a.EntryList {
+	for i, entry := range a.EntryList { //nolint
 		r.ItemList[i].Title = entry.Title
 		r.ItemList[i].Link = entry.Link.Href
-		if entry.Content == "" {
-			r.ItemList[i].Description = template.HTML(entry.Summary) // nolint
-		} else {
-			r.ItemList[i].Description = template.HTML(entry.Content) // nolint
-		}
+		r.ItemList[i].Description = "-"
 	}
 	return r
 }
@@ -197,7 +204,7 @@ func (rss *Rss2) Normalize() (Rss2, error) {
 		rss.PubDate = dt.Format(time.RFC1123Z)
 	}
 
-	for i, item := range rss.ItemList {
+	for i, item := range rss.ItemList { //nolint
 		if dt, err := rss.parseDateTime(item.PubDate); err == nil {
 			rss.ItemList[i].DT = dt
 			rss.ItemList[i].PubDate = dt.Format(time.RFC1123Z)

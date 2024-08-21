@@ -1,7 +1,7 @@
 package proc
 
 import (
-	"crypto/sha1"
+	"crypto/sha256"
 	"encoding/json"
 	"fmt"
 	"time"
@@ -26,7 +26,7 @@ func (b BoltDB) Save(fmFeed string, item feed.Item) (bool, error) {
 		if err != nil {
 			return nil, err
 		}
-		h := sha1.New()
+		h := sha256.New()
 		if _, err = h.Write([]byte(item.GUID)); err != nil {
 			return nil, err
 		}
@@ -64,7 +64,7 @@ func (b BoltDB) Save(fmFeed string, item feed.Item) (bool, error) {
 }
 
 // Load from bold for given feed, up to max
-func (b BoltDB) Load(fmFeed string, max int, skipJunk bool) ([]feed.Item, error) {
+func (b BoltDB) Load(fmFeed string, maxVal int, skipJunk bool) ([]feed.Item, error) {
 	var result []feed.Item
 
 	err := b.DB.View(func(tx *bolt.Tx) error {
@@ -82,7 +82,7 @@ func (b BoltDB) Load(fmFeed string, max int, skipJunk bool) ([]feed.Item, error)
 			if skipJunk && item.Junk {
 				continue
 			}
-			if len(result) >= max {
+			if len(result) >= maxVal {
 				break
 			}
 			result = append(result, item)

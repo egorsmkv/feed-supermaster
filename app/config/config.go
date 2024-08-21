@@ -74,7 +74,7 @@ func (filter *Filter) Skip(item feed.Item) (bool, error) {
 // Load config from file
 func Load(fname string) (res *Conf, err error) {
 	res = &Conf{}
-	data, err := os.ReadFile(fname) // nolint
+	data, err := os.ReadFile(fname)
 	if err != nil {
 		return nil, err
 	}

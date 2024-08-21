@@ -92,7 +92,7 @@ func makeBoltDB(dbFile string) (*bolt.DB, error) {
 	if err := os.MkdirAll(path.Dir(dbFile), 0o700); err != nil {
 		return nil, err
 	}
-	db, err := bolt.Open(dbFile, 0o600, &bolt.Options{Timeout: 1 * time.Second}) // nolint
+	db, err := bolt.Open(dbFile, 0o600, &bolt.Options{Timeout: 1 * time.Second})
 	if err != nil {
 		return nil, err
 	}

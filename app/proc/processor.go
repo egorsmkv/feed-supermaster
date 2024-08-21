@@ -44,7 +44,7 @@ func (p *Processor) processFeeds(ctx context.Context) {
 	log.Printf("[DEBUG] refresh started")
 
 	swg := syncs.NewSizedGroup(p.Conf.System.Concurrent, syncs.Preemptive, syncs.Context(ctx))
-	for name, fm := range p.Conf.Feeds {
+	for name, fm := range p.Conf.Feeds { //nolint
 		for _, src := range fm.Sources {
 			name, src, fm := name, src, fm
 			swg.Go(func(context.Context) {
@@ -59,7 +59,7 @@ func (p *Processor) processFeeds(ctx context.Context) {
 	time.Sleep(p.Conf.System.UpdateInterval)
 }
 
-func (p *Processor) processFeed(name, url, telegramGroupID string, max int, filter config.Filter) {
+func (p *Processor) processFeed(name, url, telegramGroupID string, maxVal int, filter config.Filter) {
 	rss, err := feed.Parse(url)
 	if err != nil {
 		log.Printf("[WARN] failed to parse %s, %v", url, err)
@@ -67,12 +67,12 @@ func (p *Processor) processFeed(name, url, telegramGroupID string, max int, filt
 	}
 
 	// up to MaxItems (5) items from each feed
-	upto := max
-	if len(rss.ItemList) <= max {
+	upto := maxVal
+	if len(rss.ItemList) <= maxVal {
 		upto = len(rss.ItemList)
 	}
 
-	for _, item := range rss.ItemList[:upto] {
+	for _, item := range rss.ItemList[:upto] { //nolint
 		// skip 1y and older
 		if item.DT.Before(time.Now().AddDate(-1, 0, 0)) {
 			continue

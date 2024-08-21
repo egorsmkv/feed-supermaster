@@ -66,7 +66,6 @@ func (s *Server) getFeedPageCtrl(w http.ResponseWriter, r *http.Request) {
 		err = s.templates.ExecuteTemplate(res, "feed.tmpl", &tmplData)
 		return res.Bytes(), err
 	})
-
 	if err != nil {
 		s.renderErrorPage(w, r, err, 400)
 		return
@@ -80,7 +79,6 @@ func (s *Server) getFeedPageCtrl(w http.ResponseWriter, r *http.Request) {
 // GET /feeds - renders page with list of feeds
 func (s *Server) getFeedsPageCtrl(w http.ResponseWriter, r *http.Request) {
 	data, err := s.cache.Get("feeds", func() ([]byte, error) {
-
 		feeds := s.feeds()
 
 		type feedItem struct {
@@ -119,7 +117,6 @@ func (s *Server) getFeedsPageCtrl(w http.ResponseWriter, r *http.Request) {
 		err := s.templates.ExecuteTemplate(res, "feeds.tmpl", &tmplData)
 		return res.Bytes(), err
 	})
-
 	if err != nil {
 		s.renderErrorPage(w, r, err, 400)
 		return

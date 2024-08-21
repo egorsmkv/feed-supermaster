@@ -43,7 +43,7 @@ func main() {
 	}
 	setupLog(opts.Dbg)
 
-	var conf = &config.Conf{}
+	conf := &config.Conf{}
 	var err error
 	if opts.Feed == "" {
 		conf, err = config.Load(opts.Conf)

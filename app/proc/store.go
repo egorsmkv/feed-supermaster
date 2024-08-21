@@ -32,7 +32,6 @@ func (b BoltDB) Save(fmFeed string, item feed.Item) (bool, error) {
 		}
 		return []byte(fmt.Sprintf("%d-%x", ts.Unix(), h.Sum(nil))), nil
 	}()
-
 	if err != nil {
 		return created, err
 	}

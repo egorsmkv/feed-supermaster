@@ -1,20 +1,20 @@
 module github.com/umputun/feed-master
 
-go 1.22.2
+go 1.23
 
 require (
 	github.com/dustin/go-humanize v1.0.1
-	github.com/go-chi/chi/v5 v5.0.12
+	github.com/go-chi/chi/v5 v5.1.0
 	github.com/go-chi/render v1.0.3
 	github.com/go-pkgz/lcw/v2 v2.0.0
 	github.com/go-pkgz/lgr v0.11.1
 	github.com/go-pkgz/repeater v1.1.3
 	github.com/go-pkgz/rest v1.19.0
 	github.com/go-pkgz/syncs v1.3.2
-	github.com/jessevdk/go-flags v1.5.0
+	github.com/jessevdk/go-flags v1.6.1
 	github.com/pkg/errors v0.9.1
-	go.etcd.io/bbolt v1.3.10
-	gopkg.in/telebot.v3 v3.2.1
+	go.etcd.io/bbolt v1.3.11
+	gopkg.in/telebot.v3 v3.3.8
 	gopkg.in/yaml.v3 v3.0.1
 )
 
@@ -27,7 +27,7 @@ require (
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/hashicorp/golang-lru/v2 v2.0.7 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
-	github.com/redis/go-redis/v9 v9.5.1 // indirect
-	golang.org/x/sys v0.20.0 // indirect
+	github.com/redis/go-redis/v9 v9.6.1 // indirect
+	golang.org/x/sys v0.24.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 )

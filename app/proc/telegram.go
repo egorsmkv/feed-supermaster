@@ -86,26 +86,19 @@ func (client TelegramClient) sendText(channelID string, rssFeed feed.Rss2, item 
 		recipient{chatID: channelID},
 		client.getMessageHTML(rssFeed, item),
 		tb.ModeHTML,
-		tb.NoPreview,
+		// tb.NoPreview,
 	)
 
 	return message, err
 }
 
 // getMessageHTML generates HTML message from provided feed.Item
-func (client TelegramClient) getMessageHTML(rssFeed feed.Rss2, item feed.Item) string {
-	var header, footer string
+func (client TelegramClient) getMessageHTML(_ feed.Rss2, item feed.Item) string {
 	title := strings.TrimSpace(item.Title)
-	if title != "" && item.Link == "" {
-		header = fmt.Sprintf("%s\n\n", title)
-	} else if title != "" && item.Link != "" {
-		header = fmt.Sprintf("<a href=%q>%s</a>\n\n", item.Link, title)
-	}
 
-	rssFeed.Title = strings.TrimSpace(rssFeed.Title)
-	feedTitle := fmt.Sprintf("<b>%s</b>\n\n", rssFeed.Title)
+	title = fmt.Sprintf("<b>%s</b>\n\n", title)
 
-	return feedTitle + header + footer
+	return title + item.Link
 }
 
 type recipient struct {

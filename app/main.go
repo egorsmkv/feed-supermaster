@@ -77,7 +77,7 @@ func main() {
 
 	server := api.Server{
 		Version: revision,
-		Conf:    *conf,
+		Conf:    *p.Conf,
 		Store:   procStore,
 	}
 	server.Run(context.Background(), opts.Port)

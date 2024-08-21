@@ -9,6 +9,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/render"
 	"github.com/go-pkgz/rest"
+	"github.com/pkg/errors"
 
 	"github.com/umputun/feed-master/app/config"
 	"github.com/umputun/feed-master/app/feed"
@@ -16,6 +17,11 @@ import (
 
 // GET /feed/{name} - renders page with list of items
 func (s *Server) getFeedPageCtrl(w http.ResponseWriter, r *http.Request) {
+	if s.cache == nil {
+		s.renderErrorPage(w, r, errors.New("cache not initialized"), 500)
+		return
+	}
+
 	feedName := chi.URLParam(r, "name")
 
 	data, err := s.cache.Get(feedName, func() ([]byte, error) {
@@ -78,6 +84,11 @@ func (s *Server) getFeedPageCtrl(w http.ResponseWriter, r *http.Request) {
 
 // GET /feeds - renders page with list of feeds
 func (s *Server) getFeedsPageCtrl(w http.ResponseWriter, r *http.Request) {
+	if s.cache == nil {
+		s.renderErrorPage(w, r, errors.New("cache not initialized"), 500)
+		return
+	}
+
 	data, err := s.cache.Get("feeds", func() ([]byte, error) {
 		feeds := s.feeds()
 

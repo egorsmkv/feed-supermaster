@@ -128,6 +128,9 @@ func tryRead(fs embed.FS, prefix, requestedPath string, w http.ResponseWriter) e
 	defer f.Close()
 
 	stat, _ := f.Stat()
+	if stat == nil {
+		return errors.New("can't stat file")
+	}
 	if stat.IsDir() {
 		return errors.New("path is dir")
 	}

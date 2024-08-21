@@ -110,6 +110,10 @@ func Parse(uri string) (result Rss2, err error) {
 		}
 	}()
 
+	if resp == nil {
+		return result, errors.New("empty response")
+	}
+
 	if resp.StatusCode != http.StatusOK {
 		return result, fmt.Errorf("non-200 status code %s, url: %s", resp.Status, uri)
 	}

@@ -13,7 +13,7 @@ require (
 	github.com/go-pkgz/syncs v1.3.2
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/pkg/errors v0.9.1
-	go.etcd.io/bbolt v1.4.2
+	go.etcd.io/bbolt v1.4.3
 	gopkg.in/telebot.v3 v3.3.8
 	gopkg.in/yaml.v3 v3.0.1
 )

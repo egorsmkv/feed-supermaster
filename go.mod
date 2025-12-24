@@ -9,7 +9,7 @@ require (
 	github.com/go-pkgz/lcw/v2 v2.0.0
 	github.com/go-pkgz/lgr v0.12.1
 	github.com/go-pkgz/repeater v1.2.0
-	github.com/go-pkgz/rest v1.20.5
+	github.com/go-pkgz/rest v1.20.6
 	github.com/go-pkgz/syncs v1.3.2
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/pkg/errors v0.9.1
